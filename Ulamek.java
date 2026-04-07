@@ -1,16 +1,23 @@
-public class Ulamek {
-    int licz, mian;
-
     public Ulamek(int licz, int mian) {
-        // Skracanie ułamka (prosty sposób)
-        int a = Math.abs(licz), b = Math.abs(mian);
-        while (b != 0) { int t = b; b = a % b; a = t; }
+        if (mian == 0) {
+            throw new IllegalArgumentException("Mianownik nie może być zerem!");
+        }
+
+        // 1. Zabezpieczenie przed ujemnym mianownikiem
+        if (mian < 0) {
+            licz = -licz; 
+            mian = -mian; 
+        }
+
+        // 2. Skracanie ułamka (logika Euklidesa, bez zmian)
+        int a = Math.abs(licz), b = mian;
+        while (b != 0) {
+            int t = b;
+            b = a % b;
+            a = t;
+        }
+
+        // Zapisanie skróconych wartości
         this.licz = licz / a;
         this.mian = mian / a;
     }
-
-    @Override
-    public String toString() {
-        return (mian == 1) ? "" + licz : licz + "/" + mian;
-    }
-}
